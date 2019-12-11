@@ -1,2 +1,2 @@
-# hhxApi
-hhx的api
+go get -u github.com/gin-gonic/gin
+
