@@ -6,7 +6,6 @@
 */
 package Middlewares
 
-import "C"
 import (
 	"errors"
 	"fmt"

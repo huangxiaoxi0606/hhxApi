@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"hhxApi/Config"
 	"hhxApi/Handlers"
 	"hhxApi/Middlewares"
 )
@@ -9,10 +10,14 @@ import (
 func main()  {
 	//gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
-	//router.Use(Middlewares.CORSMiddleware())
+	router.Use(Middlewares.CORSMiddleware())
 	v1 := router.Group("/v1")
 	{
-		v1.GET("/aes",Middlewares.SetUp(), Handlers.AesTest)
+		if Config.Mode == "product" {
+			v1.Use(Middlewares.SetUp())
+		}
+		v1.GET("/aes", Handlers.AesTest)
+		v1.GET("/top", Handlers.GetDbTopList)
 
 	}
 	router.Run(":8088")
