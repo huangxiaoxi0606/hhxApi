@@ -22,6 +22,8 @@ func main()  {
 		v1.GET("/db_music_top_list", Handlers.GetDbMusicTopList)
 		v1.GET("/db_music_top_detail", Handlers.GetDbMusicTopDetail)
 
+		v1.GET("/direction_week_log", Handlers.GetDirectionWeekLog)
+
 	}
 	router.Run(":8088")
 }
