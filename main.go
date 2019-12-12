@@ -17,7 +17,10 @@ func main()  {
 			v1.Use(Middlewares.SetUp())
 		}
 		v1.GET("/aes", Handlers.AesTest)
-		v1.GET("/top", Handlers.GetDbTopList)
+		v1.GET("/db_top_list", Handlers.GetDbTopList)
+		v1.GET("/db_top_detail", Handlers.GetDbTopDetail)
+		v1.GET("/db_music_top_list", Handlers.GetDbMusicTopList)
+		v1.GET("/db_music_top_detail", Handlers.GetDbMusicTopDetail)
 
 	}
 	router.Run(":8088")
