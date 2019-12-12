@@ -21,3 +21,4 @@ type DirectionLog struct {
 func (DirectionLog) TableName() string {
 	return "direction_logs"
 }
+

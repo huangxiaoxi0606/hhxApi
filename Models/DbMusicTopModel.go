@@ -6,6 +6,13 @@
 */
 package Models
 
+import (
+	"github.com/jinzhu/gorm"
+	"hhxApi/Config"
+	"hhxApi/Response"
+	"log"
+)
+
 type DbMusicTop struct {
 	Id       int64  `json:"id"`
 	No       string `json:"no"`
@@ -22,6 +29,31 @@ type DbMusicTop struct {
 	Songs    string `json:"songs"`
 }
 
-func (DbMusicTop) TableName() string {
-	return "db_music_tops"
+func GetMusicTopLists(pageNum int, pageSize int, maps interface{}) ([]*Response.DbMusicTopResponse, error) {
+	var dbMusicTop []*DbMusicTop
+	var dbMusicTopList = []*Response.DbMusicTopResponse{}
+	db, err := gorm.Open("mysql", Config.DSN)
+	defer db.Close()
+	if err != nil {
+		log.Panic("mysql db connect faild --- " + err.Error())
+	}
+	errs := db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&dbMusicTop).Scan(&dbMusicTopList).Error
+	if errs != nil && errs != gorm.ErrRecordNotFound {
+		return nil, errs
+	}
+
+	return dbMusicTopList, nil
+}
+
+
+func GetMusicTop(id int) (Response.DbMusicTopResponse, error) {
+	var dbMusicTop DbMusicTop
+	var dbMusicTopDetail = Response.DbMusicTopResponse{}
+	db, err := gorm.Open("mysql", Config.DSN)
+	defer db.Close()
+	if err != nil {
+		log.Panic("mysql db connect faild --- " + err.Error())
+	}
+	db.Where("id = ?", id).First(&dbMusicTop).Scan(&dbMusicTopDetail)
+	return dbMusicTopDetail, nil
 }
