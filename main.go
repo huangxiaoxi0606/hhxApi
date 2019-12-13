@@ -2,10 +2,16 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"hhxApi/Config"
 	"hhxApi/Handlers"
 	"hhxApi/Middlewares"
+	"hhxApi/Models"
 )
+
+func init()  {
+	Models.Su()
+}
 
 func main()  {
 	//gin.SetMode(gin.ReleaseMode)
@@ -34,6 +40,8 @@ func main()  {
 
 	}
 	router.Run(":8088")
+	var db *gorm.DB
+	defer db.Close()
 }
 
 //func Entry() gin.HandlerFunc {

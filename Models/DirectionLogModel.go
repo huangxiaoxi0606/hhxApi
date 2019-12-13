@@ -7,11 +7,8 @@
 package Models
 
 import (
-	"github.com/jinzhu/gorm"
-	"hhxApi/Config"
 	"hhxApi/Helpers"
 	"hhxApi/Response"
-	"log"
 )
 
 type DirectionLog struct {
@@ -31,11 +28,6 @@ func (DirectionLog) TableName() string {
 }
 
 func GetLog(mold int) ([]*Response.DirectionLogResponse, error) {
-	db, err := gorm.Open("mysql", Config.DSN)
-	defer db.Close()
-	if err != nil {
-		log.Panic("mysql db connect faild --- " + err.Error())
-	}
 	flagDate := Helpers.GetDateQuery(mold)
 	result := []*Response.DirectionLogResponse{}
 	db.Table("direction_logs").Select("direction_logs.illustration,direction_logs.id,"+
@@ -45,11 +37,6 @@ func GetLog(mold int) ([]*Response.DirectionLogResponse, error) {
 }
 
 func GetDirectionSum(mold int) ([]*Response.DirectionSumResponse, error)  {
-	db, err := gorm.Open("mysql", Config.DSN)
-	defer db.Close()
-	if err != nil {
-		log.Panic("mysql db connect faild --- " + err.Error())
-	}
 	flagDate := Helpers.GetDateQuery(mold)
 	result := []*Response.DirectionSumResponse{}
 	db.Table("direction_logs").Select("directions.name, sum(direction_logs.money) as total").Joins("join directions on direction_logs.direction_id  = directions.id").Where("direction_logs.created_at >?",flagDate.Format("2006-01-02")).Group("directions.name").Scan(&result)

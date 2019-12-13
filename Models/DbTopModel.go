@@ -8,9 +8,7 @@ package Models
 
 import (
 	"github.com/jinzhu/gorm"
-	"hhxApi/Config"
 	"hhxApi/Response"
-	"log"
 )
 
 type DbTop struct {
@@ -37,12 +35,6 @@ type DbTop struct {
 
 
 func ExistDbTopByID(id int) (bool, error) {
-	db, err := gorm.Open("mysql", Config.DSN)
-	defer db.Close()
-	if err != nil {
-		log.Panic("mysql db connect faild --- " + err.Error())
-	}
-
 	var dbTop DbTop
 	errs := db.Select("id").Where("id = ?", id).First(&dbTop).Error
 	if errs != nil && errs != gorm.ErrRecordNotFound {
@@ -58,11 +50,6 @@ func ExistDbTopByID(id int) (bool, error) {
 func GetTopLists(pageNum int, pageSize int, maps interface{}) ([]*Response.DbTopResponse, error) {
 	var dbtops []*DbTop
 	var dbTopList = []*Response.DbTopResponse{}
-	db, err := gorm.Open("mysql", Config.DSN)
-	defer db.Close()
-	if err != nil {
-		log.Panic("mysql db connect faild --- " + err.Error())
-	}
 	errs := db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&dbtops).Scan(&dbTopList).Error
 	if errs != nil && errs != gorm.ErrRecordNotFound {
 		return nil, errs
@@ -75,11 +62,6 @@ func GetTopLists(pageNum int, pageSize int, maps interface{}) ([]*Response.DbTop
 func GetTop(id int) (Response.DbTopResponse, error) {
 	var dbtop DbTop
 	var dbTopDetail = Response.DbTopResponse{}
-	db, err := gorm.Open("mysql", Config.DSN)
-	defer db.Close()
-	if err != nil {
-		log.Panic("mysql db connect faild --- " + err.Error())
-	}
 	db.Where("id = ?", id).First(&dbtop).Scan(&dbTopDetail)
 	return dbTopDetail, nil
 }

@@ -8,9 +8,7 @@ package Models
 
 import (
 	"github.com/jinzhu/gorm"
-	"hhxApi/Config"
 	"hhxApi/Response"
-	"log"
 )
 
 type DbMusicTop struct {
@@ -32,11 +30,6 @@ type DbMusicTop struct {
 func GetMusicTopLists(pageNum int, pageSize int, maps interface{}) ([]*Response.DbMusicTopResponse, error) {
 	var dbMusicTop []*DbMusicTop
 	var dbMusicTopList = []*Response.DbMusicTopResponse{}
-	db, err := gorm.Open("mysql", Config.DSN)
-	defer db.Close()
-	if err != nil {
-		log.Panic("mysql db connect faild --- " + err.Error())
-	}
 	errs := db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&dbMusicTop).Scan(&dbMusicTopList).Error
 	if errs != nil && errs != gorm.ErrRecordNotFound {
 		return nil, errs
@@ -49,11 +42,6 @@ func GetMusicTopLists(pageNum int, pageSize int, maps interface{}) ([]*Response.
 func GetMusicTop(id int) (Response.DbMusicTopResponse, error) {
 	var dbMusicTop DbMusicTop
 	var dbMusicTopDetail = Response.DbMusicTopResponse{}
-	db, err := gorm.Open("mysql", Config.DSN)
-	defer db.Close()
-	if err != nil {
-		log.Panic("mysql db connect faild --- " + err.Error())
-	}
 	db.Where("id = ?", id).First(&dbMusicTop).Scan(&dbMusicTopDetail)
 	return dbMusicTopDetail, nil
 }
