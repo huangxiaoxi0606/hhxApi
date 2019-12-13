@@ -39,9 +39,10 @@ func main()  {
 
 
 	}
-	router.Run(":8088")
 	var db *gorm.DB
 	defer db.Close()
+	router.Run(":8088")
+
 }
 
 //func Entry() gin.HandlerFunc {
