@@ -84,3 +84,49 @@ func pkcs5UnPadding(decrypted []byte) []byte {
 func GetCurrentUnix() int64 {
 	return time.Now().Unix()
 }
+
+//func GetFirstDateOfWeek() (weekMonday string) {
+//	now := time.Now()
+//	offset := int(time.Monday - now.Weekday())
+//	if offset > 0 {
+//		offset = -6
+//	}
+//	weekStartDate := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.Local).AddDate(0, 0, offset)
+//	weekMonday = weekStartDate.Format("2006-01-02")
+//	return
+//}
+func GetFirstDateOfWeek(d time.Time) time.Time {
+	offset := int(time.Monday - d.Weekday())
+	if offset > 0 {
+		offset = -6
+	}
+	return time.Date(d.Year(), d.Month(), d.Day(), 0, 0, 0, 0, time.Local).AddDate(0, 0, offset)
+}
+
+func GetFirstDateOfMonth(d time.Time) time.Time {
+	d = d.AddDate(0, 0, -d.Day()+1)
+	return GetZeroTime(d)
+}
+
+func GetLastDateOfMonth(d time.Time) time.Time {
+	return GetFirstDateOfMonth(d).AddDate(0, 1, -1)
+}
+
+func GetZeroTime(d time.Time) time.Time {
+	return time.Date(d.Year(), d.Month(), d.Day(), 0, 0, 0, 0, d.Location())
+}
+
+func GetDateQuery(mold int) time.Time  {
+	flagDate := time.Now()
+	switch mold {
+	case 1:
+		flagDate = GetZeroTime(flagDate)
+	case 2:
+		flagDate = GetFirstDateOfWeek(flagDate)
+	case 3:
+		flagDate = GetFirstDateOfMonth(flagDate)
+	default:
+		flagDate = GetZeroTime(flagDate)
+	}
+	return flagDate
+}
