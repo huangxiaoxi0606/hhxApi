@@ -8,25 +8,55 @@ package Handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	"hhxApi/Config"
-	"hhxApi/Helpers"
-	"hhxApi/Response"
+	"hhxApi/Models"
 	"hhxApi/Until"
 	"log"
 )
 
 func GetDirectionWeekLog(context *gin.Context) {
-	db, err := gorm.Open("mysql", Config.DSN)
-	defer db.Close()
-	if err != nil {
-		log.Panic("mysql db connect faild --- " + err.Error())
+	result, err1 := Models.GetLog(2)
+	if err1 != nil {
+		log.Panic("directionlog faild --- " + err1.Error())
 	}
-	var monday = Helpers.GetFirstDateOfWeek()
-	var result = []Response.DirectionLogResponce{}
-	db.Table("direction_logs").Select("direction_logs.illustration,direction_logs.id," +
-		"direction_logs.daily_id,direction_logs.status,direction_logs.ok,direction_logs.money,direction_logs.week_day," +
-		"direction_logs.week_day,direction_logs.created_at, directions.name").Joins("left join directions on directions.id = direction_logs.direction_id").Where(" direction_logs.created_at > ?", monday).Scan(&result)
-	utilGin := Until.Gin{Ctx:context}
+	utilGin := Until.Gin{Ctx: context}
 	utilGin.Response(Config.STATUS_OK, "获取成功", result)
 }
+
+func GetDirectionTodayLog(context *gin.Context) {
+	result, err1 := Models.GetLog(1)
+	if err1 != nil {
+		log.Panic("directionlog faild --- " + err1.Error())
+	}
+	utilGin := Until.Gin{Ctx: context}
+	utilGin.Response(Config.STATUS_OK, "获取成功", result)
+}
+
+
+func GetDirectionMouthLog(context *gin.Context) {
+	result, err1 := Models.GetLog(3)
+	if err1 != nil {
+		log.Panic("directionlog faild --- " + err1.Error())
+	}
+	utilGin := Until.Gin{Ctx: context}
+	utilGin.Response(Config.STATUS_OK, "获取成功", result)
+}
+
+func GetDirectionMouthSum(context *gin.Context)  {
+	result, err1 := Models.GetDirectionSum(3)
+	if err1 != nil {
+		log.Panic("directionlog faild --- " + err1.Error())
+	}
+	utilGin := Until.Gin{Ctx: context}
+	utilGin.Response(Config.STATUS_OK, "获取成功", result)
+}
+
+func GetDirectionWeekSum(context *gin.Context)  {
+	result, err1 := Models.GetDirectionSum(2)
+	if err1 != nil {
+		log.Panic("directionlog faild --- " + err1.Error())
+	}
+	utilGin := Until.Gin{Ctx: context}
+	utilGin.Response(Config.STATUS_OK, "获取成功", result)
+}
+

@@ -44,7 +44,7 @@ type DbMusicTopResponse struct {
 	Songs    string `json:"songs"`
 }
 
-type DirectionLogResponce struct {
+type DirectionLogResponse struct {
 	Id           int64 `json:"id"`
 	Name  string `json:"name"`
 	DailyId      int64 `json:"daily_id"`
@@ -54,4 +54,21 @@ type DirectionLogResponce struct {
 	Money        string `json:"money"`
 	WeekDay      int64 `json:"week_day"`
 	CreatedAt    string `json:"created_at"`
+}
+
+type DirectionResponse struct {
+	Id           int64  `json:"id"`
+	Name  string `json:"name"`
+	Intro  string `json:"intro"`
+	Img  string `json:"Img"`
+	Status  string `json:"status"`
+	OrderNum  int64 `json:"order_num"`
+	AllNum  string `json:"all_num"`
+	CreatedAt  string `json:"created_at"`
+}
+
+
+type DirectionSumResponse struct{
+	Name     string  `json:"name"`
+	Total        string `json:"total"`
 }

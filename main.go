@@ -23,6 +23,14 @@ func main()  {
 		v1.GET("/db_music_top_detail", Handlers.GetDbMusicTopDetail)
 
 		v1.GET("/direction_week_log", Handlers.GetDirectionWeekLog)
+		v1.GET("/direction_today_log", Handlers.GetDirectionTodayLog)
+		v1.GET("/direction_mouth_log", Handlers.GetDirectionMouthLog)
+
+		v1.GET("/direction_list", Handlers.GetDirectionList)
+
+		v1.GET("/direction_mouth_sum", Handlers.GetDirectionMouthSum)
+		v1.GET("/direction_week_sum", Handlers.GetDirectionWeekSum)
+
 
 	}
 	router.Run(":8088")
