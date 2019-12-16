@@ -9,11 +9,11 @@ import (
 	"hhxApi/Models"
 )
 
-func init()  {
+func init() {
 	Models.Su()
 }
 
-func main()  {
+func main() {
 	//gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 	router.Use(Middlewares.CORSMiddleware())
@@ -23,22 +23,31 @@ func main()  {
 			v1.Use(Middlewares.SetUp())
 		}
 		v1.GET("/aes", Handlers.AesTest)
-		v1.GET("/db_top_list", Handlers.GetDbTopList)
-		v1.GET("/db_top_detail", Handlers.GetDbTopDetail)
-		v1.GET("/db_music_top_list", Handlers.GetDbMusicTopList)
-		v1.GET("/db_music_top_detail", Handlers.GetDbMusicTopDetail)
+		v1.GET("/db_top_list", Handlers.DbTopList)
+		v1.GET("/db_top_detail", Handlers.DbTopDetail)
+		v1.GET("/db_music_top_list", Handlers.DbMusicTopList)
+		v1.GET("/db_music_top_detail", Handlers.DbMusicTopDetail)
 
-		v1.GET("/direction_week_log", Handlers.GetDirectionWeekLog)
-		v1.GET("/direction_today_log", Handlers.GetDirectionTodayLog)
-		v1.GET("/direction_mouth_log", Handlers.GetDirectionMouthLog)
+		v1.GET("/direction_week_log", Handlers.DirectionWeekLog)
+		v1.GET("/direction_today_log", Handlers.DirectionTodayLog)
+		v1.GET("/direction_mouth_log", Handlers.DirectionMouthLog)
 
-		v1.GET("/direction_list", Handlers.GetDirectionList)
+		v1.GET("/direction_list", Handlers.DirectionList)
 
-		v1.GET("/direction_mouth_sum", Handlers.GetDirectionMouthSum)
-		v1.GET("/direction_week_sum", Handlers.GetDirectionWeekSum)
+		v1.GET("/direction_mouth_sum", Handlers.DirectionMouthSum)
+		v1.GET("/direction_week_sum", Handlers.DirectionWeekSum)
+		v1.GET("/directionlog_mold_id", Handlers.DirectionLogByMoldId)
 
+		v1.GET("/hhx_travil_list", Handlers.HhxTravilList)
+		v1.GET("/hhx_travil_detail", Handlers.HhxTravilDetail)
+		v1.GET("/hhx_travil_traffic", Handlers.HhxTravilTraffic)
+		v1.GET("/hhx_travil_bill", Handlers.HhxTravilBill)
+
+
+		v1.GET("/add_have", Handlers.AddHave)
 
 	}
+
 	var db *gorm.DB
 	defer db.Close()
 	router.Run(":8088")
@@ -66,5 +75,3 @@ func main()  {
 //		context.Next()
 //	}
 //}
-
-

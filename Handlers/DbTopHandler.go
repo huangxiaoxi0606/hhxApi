@@ -9,14 +9,14 @@ package Handlers
 import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"hhxApi/Config"
 	"hhxApi/Models"
 	"hhxApi/Until"
 	"log"
+	"net/http"
 	"strconv"
 )
 
-func GetDbTopList(context *gin.Context) {
+func DbTopList(context *gin.Context) {
 	//db, err := gorm.Open("mysql", Config.DSN)
 	//defer db.Close()
 	//if err != nil {
@@ -36,15 +36,15 @@ func GetDbTopList(context *gin.Context) {
 		return
 	}
 	utilGin := Until.Gin{Ctx: context}
-	utilGin.Response(Config.STATUS_OK, "获取成功", dbTopList)
+	utilGin.Response(http.StatusOK, "获取成功", dbTopList)
 
 }
 
-func GetDbTopDetail(context *gin.Context) {
+func DbTopDetail(context *gin.Context) {
 	utilGin := Until.Gin{Ctx: context}
 	id, ok := context.GetQuery("id")
 	if !ok {
-		utilGin.Response(Config.STATUS_LACK_PARAM, "id is required", nil)
+		utilGin.Response(http.StatusBadRequest, "id is required", nil)
 		return
 	}
 	ids, _ := strconv.Atoi(id)
@@ -60,11 +60,11 @@ func GetDbTopDetail(context *gin.Context) {
 		log.Panic("dbTopList faild --- " + err.Error())
 		return
 	}
-	utilGin.Response(Config.STATUS_OK, "获取成功", dbDeatil)
+	utilGin.Response(http.StatusOK, "获取成功", dbDeatil)
 
 }
 
-func GetDbMusicTopList(context *gin.Context) {
+func DbMusicTopList(context *gin.Context) {
 	//db, err := gorm.Open("mysql", Config.DSN)
 	//defer db.Close()
 	//if err != nil {
@@ -81,14 +81,14 @@ func GetDbMusicTopList(context *gin.Context) {
 		return
 	}
 	utilGin := Until.Gin{Ctx: context}
-	utilGin.Response(Config.STATUS_OK, "获取成功", dbMusicTopList)
+	utilGin.Response(http.StatusOK, "获取成功", dbMusicTopList)
 }
 
-func GetDbMusicTopDetail(context *gin.Context) {
+func DbMusicTopDetail(context *gin.Context) {
 	utilGin := Until.Gin{Ctx: context}
 	id, ok := context.GetQuery("id")
 	if !ok {
-		utilGin.Response(Config.STATUS_LACK_PARAM, "id is required", nil)
+		utilGin.Response(http.StatusBadRequest, "id is required", nil)
 		return
 	}
 	ids, _ := strconv.Atoi(id)
@@ -104,6 +104,6 @@ func GetDbMusicTopDetail(context *gin.Context) {
 		log.Panic("dbMusicDeatil faild --- " + err.Error())
 		return
 	}
-	utilGin.Response(Config.STATUS_OK, "获取成功", dbMusicDeatil)
+	utilGin.Response(http.StatusOK, "获取成功", dbMusicDeatil)
 }
 
