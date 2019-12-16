@@ -8,13 +8,13 @@ package Handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"hhxApi/Config"
 	"hhxApi/Models"
 	"hhxApi/Until"
 	"log"
+	"net/http"
 )
 
-func GetDirectionList(context *gin.Context) {
+func DirectionList(context *gin.Context) {
 	PageNum := 1
 	PageSize := 10
 	maps := make(map[string]interface{})
@@ -24,6 +24,6 @@ func GetDirectionList(context *gin.Context) {
 		return
 	}
 	utilGin := Until.Gin{Ctx: context}
-	utilGin.Response(Config.STATUS_OK, "获取成功", directionList)
+	utilGin.Response(http.StatusOK, "获取成功", directionList)
 }
 

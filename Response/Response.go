@@ -45,30 +45,66 @@ type DbMusicTopResponse struct {
 }
 
 type DirectionLogResponse struct {
-	Id           int64 `json:"id"`
-	Name  string `json:"name"`
-	DailyId      int64 `json:"daily_id"`
-	Status       int64 `json:"status"`
-	Ok           int64 `json:"ok"`
+	Id           int64  `json:"id"`
+	Name         string `json:"name"`
+	DailyId      int64  `json:"daily_id"`
+	Status       int64  `json:"status"`
+	Ok           int64  `json:"ok"`
 	Illustration string `json:"illustration"`
 	Money        string `json:"money"`
-	WeekDay      int64 `json:"week_day"`
+	WeekDay      int64  `json:"week_day"`
 	CreatedAt    string `json:"created_at"`
 }
 
 type DirectionResponse struct {
-	Id           int64  `json:"id"`
-	Name  string `json:"name"`
-	Intro  string `json:"intro"`
-	Img  string `json:"Img"`
-	Status  string `json:"status"`
-	OrderNum  int64 `json:"order_num"`
-	AllNum  string `json:"all_num"`
-	CreatedAt  string `json:"created_at"`
+	Id        int64  `json:"id"`
+	Name      string `json:"name"`
+	Intro     string `json:"intro"`
+	Img       string `json:"Img"`
+	Status    string `json:"status"`
+	OrderNum  int64  `json:"order_num"`
+	AllNum    string `json:"all_num"`
+	CreatedAt string `json:"created_at"`
 }
 
+type DirectionSumResponse struct {
+	Name  string `json:"name"`
+	Total string `json:"total"`
+}
 
-type DirectionSumResponse struct{
-	Name     string  `json:"name"`
-	Total        string `json:"total"`
+type HhxTravilResponse struct {
+	Id          int64  `json:"id"`
+	Name        string `json:"name"`
+	Topic       string `json:"topic"`
+	Money       string `json:"money"`
+	Days        int64  `json:"days"`
+	Nums        int64  `json:"nums"`
+	Status      string `json:"status"`
+	TravilStart string `json:"travil_start"`
+	TravilEnd   string `json:"travil_end"`
+	Note        string `json:"note"`
+}
+
+type HhxTravilBillResponse struct {
+	Name         string `json:"name"`
+	Money        string `json:"money"`
+	Illustration string `json:"illustration"`
+}
+
+type HhxTravilTrafficResponse struct {
+	Name       string `json:"name"`
+	Money      string `json:"money"`
+	Img        string `json:"img"`
+	Illustrate string `json:"illustrate"`
+}
+
+type HaveResponse struct {
+	Id        int64  `json:"id"`
+	Name      string `json:"name"`
+	Intro     string `json:"intro"`
+	Pic       string `json:"pic"`
+	Year      string `json:"year"`
+	Mold      int64  `json:"mold"`
+	Type      int64  `json:"type"`
+	CreatedAt string `json:"created_at"`
 }

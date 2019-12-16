@@ -36,10 +36,19 @@ func GetLog(mold int) ([]*Response.DirectionLogResponse, error) {
 	return result, nil
 }
 
-func GetDirectionSum(mold int) ([]*Response.DirectionSumResponse, error)  {
+func GetDirectionSum(mold int) ([]*Response.DirectionSumResponse, error) {
 	flagDate := Helpers.GetDateQuery(mold)
 	result := []*Response.DirectionSumResponse{}
-	db.Table("direction_logs").Select("directions.name, sum(direction_logs.money) as total").Joins("join directions on direction_logs.direction_id  = directions.id").Where("direction_logs.created_at >?",flagDate.Format("2006-01-02")).Group("directions.name").Scan(&result)
+	db.Table("direction_logs").Select("directions.name, sum(direction_logs.money) as total").Joins("join directions on direction_logs.direction_id  = directions.id").Where("direction_logs.created_at >?", flagDate.Format("2006-01-02")).Group("directions.name").Scan(&result)
+	return result, nil
+}
+
+func GetDirectionLog(mold int,id int) ([]*Response.DirectionLogResponse, error) {
+	flagDate := Helpers.GetDateQuery(mold)
+	result := []*Response.DirectionLogResponse{}
+	db.Table("direction_logs").Select("direction_logs.illustration,direction_logs.id,"+
+		"direction_logs.daily_id,direction_logs.status,direction_logs.ok,direction_logs.money,direction_logs.week_day,"+
+		"direction_logs.week_day,direction_logs.created_at, directions.name").Joins("left join directions on directions.id = direction_logs.direction_id").Where(" direction_logs.created_at > ? and directions.id = ?", flagDate.Format("2006-01-02"),id).Scan(&result)
 	return result, nil
 }
 
