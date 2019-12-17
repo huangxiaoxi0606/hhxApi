@@ -15,8 +15,8 @@ type DbTop struct {
 	Id           int64  `json:"id"`
 	No           string `json:"no"`
 	Img          string `json:"img"`
-	Ctitle       string `json:"c_title"`
-	Wtitle       string `json:"w_title"`
+	CTitle       string `json:"c_title"`
+	WTitle       string `json:"w_title"`
 	RatingNum    string `json:"rating_num"`
 	Inq          string `json:"inq"`
 	CommentNum   string `json:"comment_num"`
@@ -48,9 +48,9 @@ func ExistDbTopByID(id int) (bool, error) {
 }
 
 func GetTopLists(pageNum int, pageSize int, maps interface{}) ([]*Response.DbTopResponse, error) {
-	var dbtops []*DbTop
-	var dbTopList = []*Response.DbTopResponse{}
-	errs := db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&dbtops).Scan(&dbTopList).Error
+	var dbTops []*DbTop
+	var dbTopList []*Response.DbTopResponse
+	errs := db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&dbTops).Scan(&dbTopList).Error
 	if errs != nil && errs != gorm.ErrRecordNotFound {
 		return nil, errs
 	}
@@ -60,8 +60,8 @@ func GetTopLists(pageNum int, pageSize int, maps interface{}) ([]*Response.DbTop
 
 
 func GetTop(id int) (Response.DbTopResponse, error) {
-	var dbtop DbTop
+	var dbTop DbTop
 	var dbTopDetail = Response.DbTopResponse{}
-	db.Where("id = ?", id).First(&dbtop).Scan(&dbTopDetail)
+	db.Where("id = ?", id).First(&dbTop).Scan(&dbTopDetail)
 	return dbTopDetail, nil
 }

@@ -72,7 +72,7 @@ type DirectionSumResponse struct {
 	Total string `json:"total"`
 }
 
-type HhxTravilResponse struct {
+type HhxTravelResponse struct {
 	Id          int64  `json:"id"`
 	Name        string `json:"name"`
 	Topic       string `json:"topic"`
@@ -80,18 +80,18 @@ type HhxTravilResponse struct {
 	Days        int64  `json:"days"`
 	Nums        int64  `json:"nums"`
 	Status      string `json:"status"`
-	TravilStart string `json:"travil_start"`
-	TravilEnd   string `json:"travil_end"`
+	TravelStart string `json:"travel_start"`
+	TravelEnd   string `json:"travel_end"`
 	Note        string `json:"note"`
 }
 
-type HhxTravilBillResponse struct {
+type HhxTravelBillResponse struct {
 	Name         string `json:"name"`
 	Money        string `json:"money"`
 	Illustration string `json:"illustration"`
 }
 
-type HhxTravilTrafficResponse struct {
+type HhxTravelTrafficResponse struct {
 	Name       string `json:"name"`
 	Money      string `json:"money"`
 	Img        string `json:"img"`

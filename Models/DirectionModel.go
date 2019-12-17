@@ -24,7 +24,7 @@ type Direction struct {
 
 func GetDirectionLists(pageNum int, pageSize int, maps interface{}) ([]*Response.DirectionResponse, error) {
 	var direction []*Direction
-	var directionList = []*Response.DirectionResponse{}
+	var directionList []*Response.DirectionResponse
 	errs := db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&direction).Scan(&directionList).Error
 	if errs != nil && errs != gorm.ErrRecordNotFound {
 		return nil, errs
