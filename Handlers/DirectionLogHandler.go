@@ -18,7 +18,7 @@ import (
 func DirectionWeekLog(context *gin.Context) {
 	result, err1 := Models.GetLog(2)
 	if err1 != nil {
-		log.Panic("directionlog faild --- " + err1.Error())
+		log.Panic("result is wrong --- " + err1.Error())
 	}
 	utilGin := Until.Gin{Ctx: context}
 	utilGin.Response(http.StatusOK, "获取成功", result)
@@ -27,41 +27,40 @@ func DirectionWeekLog(context *gin.Context) {
 func DirectionTodayLog(context *gin.Context) {
 	result, err1 := Models.GetLog(1)
 	if err1 != nil {
-		log.Panic("directionlog faild --- " + err1.Error())
+		log.Panic("result is wrong --- " + err1.Error())
 	}
 	utilGin := Until.Gin{Ctx: context}
 	utilGin.Response(http.StatusOK, "获取成功", result)
 }
-
 
 func DirectionMouthLog(context *gin.Context) {
 	result, err1 := Models.GetLog(3)
 	if err1 != nil {
-		log.Panic("directionlog faild --- " + err1.Error())
+		log.Panic("result is wrong --- " + err1.Error())
 	}
 	utilGin := Until.Gin{Ctx: context}
 	utilGin.Response(http.StatusOK, "获取成功", result)
 }
 
-func DirectionMouthSum(context *gin.Context)  {
+func DirectionMouthSum(context *gin.Context) {
 	result, err1 := Models.GetDirectionSum(3)
 	if err1 != nil {
-		log.Panic("directionlog faild --- " + err1.Error())
+		log.Panic("result is wrong --- " + err1.Error())
 	}
 	utilGin := Until.Gin{Ctx: context}
 	utilGin.Response(http.StatusOK, "获取成功", result)
 }
 
-func DirectionWeekSum(context *gin.Context)  {
+func DirectionWeekSum(context *gin.Context) {
 	result, err1 := Models.GetDirectionSum(2)
 	if err1 != nil {
-		log.Panic("directionlog faild --- " + err1.Error())
+		log.Panic("result is wrong --- " + err1.Error())
 	}
 	utilGin := Until.Gin{Ctx: context}
 	utilGin.Response(http.StatusOK, "获取成功", result)
 }
 
-func DirectionLogByMoldId(context *gin.Context)  {
+func DirectionLogByMoldId(context *gin.Context) {
 	utilGin := Until.Gin{Ctx: context}
 	id, ok := context.GetQuery("id")
 	if !ok {
@@ -75,10 +74,9 @@ func DirectionLogByMoldId(context *gin.Context)  {
 		return
 	}
 	molds, _ := strconv.Atoi(mold)
-	result, err1 := Models.GetDirectionLog(molds,ids)
+	result, err1 := Models.GetDirectionLog(molds, ids)
 	if err1 != nil {
-		log.Panic("DirectionLogById faild --- " + err1.Error())
+		log.Panic("result is wrong --- " + err1.Error())
 	}
 	utilGin.Response(http.StatusOK, "获取成功", result)
 }
-

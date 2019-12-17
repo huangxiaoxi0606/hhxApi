@@ -17,16 +17,6 @@ import (
 )
 
 func DbTopList(context *gin.Context) {
-	//db, err := gorm.Open("mysql", Config.DSN)
-	//defer db.Close()
-	//if err != nil {
-	//	log.Panic("mysql db connect faild --- " + err.Error())
-	//}
-	//var dbTopList = []Response.DbTopResponse{}
-	//db.Where("id >?", 0).Find(&dbTopList).Scan(&dbTopList)
-	//utilGin := Until.Gin{Ctx: context}
-	//utilGin.Response(Config.STATUS_OK, "获取成功", dbTopList)
-
 	PageNum := 1
 	PageSize := 10
 	maps := make(map[string]interface{})
@@ -48,36 +38,22 @@ func DbTopDetail(context *gin.Context) {
 		return
 	}
 	ids, _ := strconv.Atoi(id)
-	//var dbDeatil = Response.DbTopResponse{}
-	//db, err := gorm.Open("mysql", Config.DSN)
-	//defer db.Close()
-	//if err != nil {
-	//	log.Panic("mysql db connect faild --- " + err.Error())
-	//}
-	//db.Where("id =?", id).Find(&dbDeatil).Scan(&dbDeatil)
-	dbDeatil, err := Models.GetTop(ids)
+	dbIntro, err := Models.GetTop(ids)
 	if err != nil {
 		log.Panic("dbTopList faild --- " + err.Error())
 		return
 	}
-	utilGin.Response(http.StatusOK, "获取成功", dbDeatil)
+	utilGin.Response(http.StatusOK, "获取成功", dbIntro)
 
 }
 
 func DbMusicTopList(context *gin.Context) {
-	//db, err := gorm.Open("mysql", Config.DSN)
-	//defer db.Close()
-	//if err != nil {
-	//	log.Panic("mysql db connect faild --- " + err.Error())
-	//}
-	//var dbMusicTopList = []Response.DbMusicTopResponse{}
-	//db.Where("id >?", 0).Find(&dbMusicTopList).Scan(&dbMusicTopList)
 	PageNum := 1
 	PageSize := 10
 	maps := make(map[string]interface{})
 	dbMusicTopList, err := Models.GetMusicTopLists(PageNum, PageSize, maps)
 	if err != nil {
-		log.Panic("dbMusicTopList faild --- " + err.Error())
+		log.Panic("dbMusicTopList is wrong --- " + err.Error())
 		return
 	}
 	utilGin := Until.Gin{Ctx: context}
@@ -92,18 +68,10 @@ func DbMusicTopDetail(context *gin.Context) {
 		return
 	}
 	ids, _ := strconv.Atoi(id)
-	//var dbMusicDeatil = []Response.DbMusicTopResponse{}
-	//db, err := gorm.Open("mysql", Config.DSN)
-	//defer db.Close()
-	//if err != nil {
-	//	log.Panic("mysql db connect faild --- " + err.Error())
-	//}
-	//db.Where("id =?", id).Find(&dbMusicDeatil).Scan(&dbMusicDeatil)
-	dbMusicDeatil, err := Models.GetMusicTop(ids)
+	dbMusicIntro, err := Models.GetMusicTop(ids)
 	if err != nil {
 		log.Panic("dbMusicDeatil faild --- " + err.Error())
 		return
 	}
-	utilGin.Response(http.StatusOK, "获取成功", dbMusicDeatil)
+	utilGin.Response(http.StatusOK, "获取成功", dbMusicIntro)
 }
-

@@ -29,7 +29,7 @@ type DbMusicTop struct {
 
 func GetMusicTopLists(pageNum int, pageSize int, maps interface{}) ([]*Response.DbMusicTopResponse, error) {
 	var dbMusicTop []*DbMusicTop
-	var dbMusicTopList = []*Response.DbMusicTopResponse{}
+	var dbMusicTopList []*Response.DbMusicTopResponse
 	errs := db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&dbMusicTop).Scan(&dbMusicTopList).Error
 	if errs != nil && errs != gorm.ErrRecordNotFound {
 		return nil, errs

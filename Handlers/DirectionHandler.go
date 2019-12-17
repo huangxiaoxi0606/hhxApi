@@ -20,10 +20,9 @@ func DirectionList(context *gin.Context) {
 	maps := make(map[string]interface{})
 	directionList, err := Models.GetDirectionLists(PageNum, PageSize, maps)
 	if err != nil {
-		log.Panic("dbTopList faild --- " + err.Error())
+		log.Panic("dbTopList is wrong --- " + err.Error())
 		return
 	}
 	utilGin := Until.Gin{Ctx: context}
 	utilGin.Response(http.StatusOK, "获取成功", directionList)
 }
-

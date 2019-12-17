@@ -36,15 +36,16 @@ func main() {
 
 		v1.GET("/direction_mouth_sum", Handlers.DirectionMouthSum)
 		v1.GET("/direction_week_sum", Handlers.DirectionWeekSum)
-		v1.GET("/directionlog_mold_id", Handlers.DirectionLogByMoldId)
+		v1.GET("/direction_log_mold_id", Handlers.DirectionLogByMoldId)
 
-		v1.GET("/hhx_travil_list", Handlers.HhxTravilList)
-		v1.GET("/hhx_travil_detail", Handlers.HhxTravilDetail)
-		v1.GET("/hhx_travil_traffic", Handlers.HhxTravilTraffic)
-		v1.GET("/hhx_travil_bill", Handlers.HhxTravilBill)
+		v1.GET("/hhx_travel_list", Handlers.HhTravelList)
+		v1.GET("/hhx_travel_detail", Handlers.HhTravelIntro)
+		v1.GET("/hhx_travel_traffic", Handlers.HhTravelTraffic)
+		v1.GET("/hhx_travel_bill", Handlers.HhTravelBill)
 
-
-		v1.GET("/add_have", Handlers.AddHave)
+		v1.POST("/add_asset", Handlers.AddAsset)
+		v1.GET("/asset_mold", Handlers.AssetMolds)
+		v1.GET("/asset_type", Handlers.AssetType)
 
 	}
 

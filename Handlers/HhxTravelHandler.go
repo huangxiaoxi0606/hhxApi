@@ -1,7 +1,7 @@
 /*
 @Time : 2019/12/16 9:30
 @Author : hhx06
-@File : HhxTravilHandler
+@File : HhxTravelHandler
 @Software: GoLand
 */
 package Handlers
@@ -15,37 +15,21 @@ import (
 	"strconv"
 )
 
-func HhxTravilList(context *gin.Context) {
+func HhTravelList(context *gin.Context) {
 	PageNum := 0
 	PageSize := 10
 	maps := make(map[string]interface{})
-	hhxTravilList, err := Models.GetTravilLists(PageNum, PageSize, maps)
+	list, err := Models.GetTravelLists(PageNum, PageSize, maps)
 	if err != nil {
-		log.Panic("dbTopList faild --- " + err.Error())
+		log.Panic("hhxTravelList is wrong --- " + err.Error())
 		return
 	}
 	utilGin := Until.Gin{Ctx: context}
-	utilGin.Response(http.StatusOK, "获取成功", hhxTravilList)
+	utilGin.Response(http.StatusOK, "获取成功", list)
 
 }
 
-func HhxTravilDetail(context *gin.Context) {
-	utilGin := Until.Gin{Ctx: context}
-	id, ok := context.GetQuery("id")
-	if !ok {
-		utilGin.Response(http.StatusBadRequest, "id is required", nil)
-		return
-	}
-	ids, _ := strconv.Atoi(id)
-	hhxTravilDetail, err := Models.GetHhxTravilDetail(ids)
-	if err != nil {
-		log.Panic("hhxTravilDetail faild --- " + err.Error())
-		return
-	}
-	utilGin.Response(http.StatusOK, "获取成功", hhxTravilDetail)
-}
-
-func HhxTravilTraffic(context *gin.Context)  {
+func HhTravelIntro(context *gin.Context) {
 	utilGin := Until.Gin{Ctx: context}
 	id, ok := context.GetQuery("id")
 	if !ok {
@@ -53,17 +37,15 @@ func HhxTravilTraffic(context *gin.Context)  {
 		return
 	}
 	ids, _ := strconv.Atoi(id)
-	hhxTravilTraffic, err := Models.GetHhxTravilTraffic(ids)
+	intro, err := Models.GetHhxTravelDetail(ids)
 	if err != nil {
-		log.Panic("hhxTravilTraffic faild --- " + err.Error())
+		log.Panic("hhxDetail is wrong--- " + err.Error())
 		return
 	}
-	utilGin.Response(http.StatusOK, "获取成功", hhxTravilTraffic)
-
+	utilGin.Response(http.StatusOK, "获取成功", intro)
 }
 
-
-func HhxTravilBill(context *gin.Context)  {
+func HhTravelTraffic(context *gin.Context) {
 	utilGin := Until.Gin{Ctx: context}
 	id, ok := context.GetQuery("id")
 	if !ok {
@@ -71,12 +53,28 @@ func HhxTravilBill(context *gin.Context)  {
 		return
 	}
 	ids, _ := strconv.Atoi(id)
-	hhxTravilBill, err := Models.GetHhxTravilBill(ids)
+	traffics, err := Models.GetHhxTravelTraffic(ids)
 	if err != nil {
-		log.Panic("hhxTravilTraffic faild --- " + err.Error())
+		log.Panic("hhxTraffic is wrong --- " + err.Error())
 		return
 	}
-	utilGin.Response(http.StatusOK, "获取成功", hhxTravilBill)
+	utilGin.Response(http.StatusOK, "获取成功", traffics)
 
 }
 
+func HhTravelBill(context *gin.Context) {
+	utilGin := Until.Gin{Ctx: context}
+	id, ok := context.GetQuery("id")
+	if !ok {
+		utilGin.Response(http.StatusBadRequest, "id is required", nil)
+		return
+	}
+	ids, _ := strconv.Atoi(id)
+	bills, err := Models.GetHhxTravelBill(ids)
+	if err != nil {
+		log.Panic("bills is wrong --- " + err.Error())
+		return
+	}
+	utilGin.Response(http.StatusOK, "获取成功", bills)
+
+}
