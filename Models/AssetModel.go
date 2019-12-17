@@ -7,6 +7,8 @@
 package Models
 
 import (
+	"github.com/jinzhu/gorm"
+	"hhxApi/Response"
 	"time"
 )
 
@@ -15,7 +17,7 @@ type Asset struct {
 	Name      string    `json:"name"`
 	Pic       string    `json:"pic"`
 	Mold      int       `json:"mold"`
-	Type      int       `json:"type"`
+	Type      string    `json:"type"`
 	CreatedAt time.Time `json:"created_at"`
 }
 
@@ -41,4 +43,38 @@ func GetType(key string) map[int]string {
 		data[v] = Mold[v]
 	}
 	return data
+}
+
+func PostUpdateAsset(id int, data interface{}) error {
+	if err := db.Model(&Asset{}).Where("id = ?", id).Updates(data).Error; err != nil {
+		return err
+	}
+	return nil
+	//db.Model(&user).Updates(map[string]interface{}{"name": "hello", "age": 18, "actived": false}).
+
+}
+
+func GetDeleteAsset(id int) error {
+	if err := db.Where("id = ?", id).Delete(Asset{}).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func GetAssetByType(t string) ([]*Response.AssetResponse, error)  {
+	var result []*Response.AssetResponse
+	errs :=  db.Table("assets").Where("type =?",t).Scan(&result).Error
+	if errs != nil && errs != gorm.ErrRecordNotFound {
+		return nil, errs
+	}
+	return result, nil
+}
+
+func GetAssetByMold(m int) ([]*Response.AssetResponse, error)  {
+	var result []*Response.AssetResponse
+	errs :=  db.Table("assets").Where("mold =?",m).Scan(&result).Error
+	if errs != nil && errs != gorm.ErrRecordNotFound {
+		return nil, errs
+	}
+	return result, nil
 }

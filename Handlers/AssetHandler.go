@@ -30,13 +30,11 @@ func AddAsset(context *gin.Context) {
 	}
 	molds, _ := strconv.Atoi(mold)
 
-	typeS, ok := context.GetPostForm("type")
+	types, ok := context.GetPostForm("type")
 	if !ok {
 		utilGin.Response(http.StatusBadRequest, "typeS is required", nil)
 		return
 	}
-	types, _ := strconv.Atoi(typeS)
-
 	header, err := context.FormFile("pic")
 	if err != nil {
 		context.String(http.StatusBadRequest, "Bad request")
@@ -75,4 +73,63 @@ func AssetType(context *gin.Context) {
 	}
 	result := Models.GetType(key)
 	utilGin.Response(http.StatusOK, "获取成功", result)
+}
+
+func UpdateAsset(context *gin.Context) {
+	utilGin := Until.Gin{Ctx: context}
+	ids, ok := context.GetPostForm("id")
+	if !ok {
+		utilGin.Response(http.StatusBadRequest, "id is required", nil)
+		return
+	}
+	id, _ := strconv.Atoi(ids)
+	name, ok := context.GetPostForm("name")
+	if !ok {
+		utilGin.Response(http.StatusBadRequest, "name is required", nil)
+		return
+	}
+	data := map[string]interface{}{"name": name, "mold": 33}
+	if err := Models.PostUpdateAsset(id, data); err != nil {
+		utilGin.Response(http.StatusEarlyHints, "更新失败", nil)
+	}
+	utilGin.Response(http.StatusOK, "更新成功", data)
+}
+
+func DeleteAsset(context *gin.Context) {
+	utilGin := Until.Gin{Ctx: context}
+	ids, ok := context.GetQuery("id")
+	if !ok {
+		utilGin.Response(http.StatusBadRequest, "id is required", nil)
+		return
+	}
+	id, _ := strconv.Atoi(ids)
+	if err := Models.GetDeleteAsset(id); err != nil {
+		utilGin.Response(http.StatusFound, "删除失败", nil)
+	}
+	utilGin.Response(http.StatusOK, "删除成功", id)
+}
+
+func AssetByMold(context *gin.Context) {
+	//data.(type)
+	utilGin := Until.Gin{Ctx: context}
+	query, ok := context.GetQuery("query")
+	if !ok {
+		utilGin.Response(http.StatusBadRequest, "query is required", nil)
+		return
+	}
+	q, _ := strconv.Atoi(query)
+	result, _ := Models.GetAssetByMold(q)
+	utilGin.Response(http.StatusOK, "删除成功", result)
+}
+
+func AssetByType(context *gin.Context) {
+	//data.(type)
+	utilGin := Until.Gin{Ctx: context}
+	query, ok := context.GetQuery("query")
+	if !ok {
+		utilGin.Response(http.StatusBadRequest, "query is required", nil)
+		return
+	}
+	result, _ := Models.GetAssetByType(query)
+	utilGin.Response(http.StatusOK, "删除成功", result)
 }
