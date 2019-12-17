@@ -44,8 +44,12 @@ func main() {
 		v1.GET("/hhx_travel_bill", Handlers.HhTravelBill)
 
 		v1.POST("/add_asset", Handlers.AddAsset)
+		v1.POST("/update_asset", Handlers.UpdateAsset)
+		v1.GET("/delete_asset", Handlers.DeleteAsset)
 		v1.GET("/asset_mold", Handlers.AssetMolds)
 		v1.GET("/asset_type", Handlers.AssetType)
+		v1.GET("/asset_by_mold", Handlers.AssetByMold)
+		v1.GET("/asset_by_type", Handlers.AssetByType)
 
 	}
 
